@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Edit — <%= book.title %></title>
+    <link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+  <h1>Edit Book</h1>
+  <form method="POST" action="/update">
+
+    <label>Title:</label>
+    <input type="text" name="title" value="<%= book.title %>" required /><br />
+
+    <label>Author:</label>
+    <input type="text" name="author" value="<%= book.author || '' %>" /><br />
+
+    <label>Rating:</label>
+    <input type="number" name="rating" min="1" max="10"
+           value="<%= book.rating || '' %>" /><br />
+
+    <label>Finished Date:</label>
+    <input type="date" name="finished_date"
+      value="<%= book.finished_date
+                ? book.finished_date.toISOString().slice(0,10)
+                : '' %>" /><br />
+
+    <label>Notes:</label><br />
+    <textarea name="notes" rows="5"><%= book.notes || '' %></textarea><br />
+    <input type="hidden" name="id" value="<%= book.id %>" />
+    <button type="submit">Save Changes</button>
+    <a href="/">Cancel</a>
+  </form>
+</body>
+</html>

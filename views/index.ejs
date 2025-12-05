@@ -1,0 +1,84 @@
+<%- include('partials/header.ejs') %>
+<body>
+<main>
+  <h1>📚 My Book Notes</h1>
+
+  <!-- Add Book Form -->
+  <div id="book-form-container">
+    <h2>Add a New Book</h2>
+    <form id="add-book-form" method="POST" action="/add">
+      <div class="form-row">
+        <label for="title">Title:</label>
+        <input id="title" name="title" type="text" required>
+      </div>
+
+      <div class="form-row">
+        <label for="author">Author:</label>
+        <input id="author" name="author" type="text">
+      </div>
+
+      <div class="form-row">
+        <label for="rating">Rating (1–10):</label>
+        <input id="rating" name="rating" type="number" min="1" max="10">
+      </div>
+
+      <div class="form-row">
+        <label for="finished_date">Finished Date:</label>
+        <input id="finished_date" name="finished_date" type="date">
+      </div>
+
+      <div class="form-row">
+        <label for="notes">Your Notes:</label>
+        <textarea id="notes" name="notes" rows="4"></textarea>
+      </div>
+
+      <button type="submit">Add Book</button>
+    </form>
+  </div>
+
+  <!-- Books Grid List -->
+  <div id="books-list">
+    <ul class="book-list">
+      <% books.forEach(book => { %>
+        <li class="book-item" data-rating="<%= book.rating || 0 %>">
+
+          <h3><%= book.title %></h3>
+          <% if (book.author) { %>
+            <p><strong>Author:</strong> <%= book.author %></p>
+          <% } %>
+
+          <% if (book.rating) { %>
+            <div class="display-stars">
+              <% for (let s = 1; s <= book.rating; s++) { %>
+                ★
+              <% } %>
+            </div>
+          <% } %>
+
+          <% if (book.finished_date) { %>
+            <p><strong>Finished:</strong> <%= book.finished_date.toISOString().slice(0,10) %></p>
+          <% } %>
+
+          <% if (book.notes) { %>
+            <p><strong>Notes:</strong> <%= book.notes %></p>
+          <% } %>
+          <div class="card-actions">
+            <a href="/books<%= book.id %>">View</a>
+
+            <form method="POST" action="/edit?editedId/<%= book.id %>" style="display:inline;">
+              <button type="submit">Edit</button>
+            </form>
+
+            <form method="POST" action="/delete/<%= book.id %>" style="display:inline;">
+              <button type="submit">Delete</button>
+            </form>
+           
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</main>
+</body>
+
+  <script src="/script.js"></script>
+<%- include('partials/footer.ejs') %>

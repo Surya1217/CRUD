@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= book.title %> — Details</title>
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <!-- Back to home link -->
+  <nav style="margin: 20px;">
+    <a href="/" style="text-decoration: none; color: #007bff;">← Back to all books</a>
+  </nav>
+
+  <main style="max-width: 800px; margin: 0 auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+    <h1><%= book.title %></h1>
+
+    <% if (book.author) { %>
+      <p><strong>Author:</strong> <%= book.author %></p>
+    <% } %>
+
+    <% if (book.rating != null) { %>
+      <p><strong>Rating:</strong> <%= book.rating %> / 10</p>
+    <% } %>
+
+    <% if (book.finished_date) { %>
+      <p><strong>Finished on:</strong> <%= new Date(book.finished_date).toISOString().slice(0,10) %></p>
+    <% } %>
+    
+    <% if (book.notes) { %>
+      <section style="margin-top: 20px;">
+        <h2>My Notes</h2>
+        <p><%= book.notes %></p>
+      </section>
+    <% } %>
+
+    <div style="margin-top: 24px;">
+      <a href="/edit?editedId=<%= book.id %>">Edit</a> |
+      <form method="POST" action="/delete/<%= book.id %>" style="display:inline;">
+        <button type="submit" style="background:none; border:none; color:#007bff; cursor:pointer; padding:0;">
+          Delete
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>
