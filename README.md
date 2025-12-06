@@ -61,7 +61,7 @@ Follow these steps to get the project up and running on your machine:
 
 Clone the repository
 
-git clone https://github.com/Surya1217/your-repo.git
+git clone https://github.com/Surya1217/CRUD.git
 cd your-repo
 
 
